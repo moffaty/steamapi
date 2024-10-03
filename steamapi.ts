@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Responses, Relationships } from './responses';
+import { Responses, Relationships } from '.';
 
 enum ISteamUser {
     "point" = "ISteamUser",
