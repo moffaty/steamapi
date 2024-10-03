@@ -1,8 +1,4 @@
-export enum Relationships {
-    "all" = "all",
-    "friend" = "friend"
-}
-
+import { Relationships } from "./enums";
 export namespace Responses {
     export interface Friend {
         steamid: string;
@@ -89,5 +85,59 @@ export namespace Responses {
     interface UserStat {
         name: string,
         achieved: number,
+    }
+
+    export interface NewsResponse {
+        appnews: News;
+    }
+
+    export interface News {
+        appid: string,
+        newsitems: NewItem[]
+    }
+
+    export interface NewItem {
+        gid: string,
+        title: string,
+        url: string,
+        is_external_url: boolean,
+        author: string,
+        contents: string,
+        feedlabel: string,
+        date: number,
+        feedname: string,
+        feed_type: number,
+        appid: number,
+        tags?: string[]
+    }
+
+    export interface GlobalAchievementsResponse {
+        achievementpercentages: GlobalAchievements,
+    }
+
+    export interface GlobalAchievements {
+        achievements: GlobalAchievement[],
+    }
+
+    export interface GlobalAchievement {
+        name: string,
+        percent: number
+    }
+
+    export interface RecentlyGamesResponse {
+        response: RecentlyGames,
+    }
+
+    export interface RecentlyGames {
+        total_count: number,
+        games: RecentlyGame[]
+    }
+
+    export interface RecentlyGame {
+        appid: number,
+        name: string,
+        playtime_2weeks: number,
+        playtime_forever: number,
+        img_icon_url: string
     }
 }
