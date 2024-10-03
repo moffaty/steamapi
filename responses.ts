@@ -58,4 +58,21 @@ export namespace Responses {
         appid: number,
         playtime_forever: number;
     }
+
+    interface AchievementResponse {
+        playerstats: Achievements
+    }
+
+    interface Achievements {
+        steamID: string,
+        gameName: string,
+        acheivements?: Achievement[]
+        success: boolean,
+    }
+
+    interface Achievement {
+        apiname: string,
+        achieved: string,
+        unlocktime: number
+    }
 }
