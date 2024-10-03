@@ -1,5 +1,5 @@
 import { expectType } from 'tsd';
-import { Responses } from '.';
+import { Responses } from './responses';
 
 const profileResponse = `{
   "response": {

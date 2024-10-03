@@ -4,13 +4,13 @@ export enum Relationships {
 }
 
 export namespace Responses {
-    interface Friend {
+    export interface Friend {
         steamid: string;
         relationship: Relationships;
         name?: string,
     }
 
-    interface FriendsList {
+    export interface FriendsList {
         friends: Friend[];
     }
 
@@ -22,11 +22,11 @@ export namespace Responses {
         response: Players
     }
 
-    interface Players {
+    export interface Players {
         players: Player[]
     }
 
-    interface Player {
+    export interface Player {
         "steamid": string,
         "communityvisibilitystate": number,
         "profilestate": number,
@@ -49,30 +49,45 @@ export namespace Responses {
         response: Games
     } 
 
-    interface Games {
+    export interface Games {
         game_count: number,
         games: Game[],
     }
 
-    interface Game {
+    export interface Game {
         appid: number,
         playtime_forever: number;
     }
 
-    interface AchievementResponse {
+    export interface AchievementResponse {
         playerstats: Achievements
     }
 
-    interface Achievements {
+    export interface Achievements {
         steamID: string,
         gameName: string,
         acheivements?: Achievement[]
         success: boolean,
     }
 
-    interface Achievement {
+    export interface Achievement {
         apiname: string,
         achieved: string,
         unlocktime: number
+    }
+
+    export interface UserStatsResponse {
+        playerstats: UserStats,
+    }
+
+    interface UserStats {
+        steamID: string,
+        gameName: string,
+        achievements: UserStat[]
+    }
+
+    interface UserStat {
+        name: string,
+        achieved: number,
     }
 }

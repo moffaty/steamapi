@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Responses, Relationships } from '.';
+import { Responses, Relationships } from './responses';
 
 enum ISteamUser {
     "point" = "ISteamUser",
@@ -15,6 +15,7 @@ enum ISteamNews {
 enum ISteamUserStats {
     "point" = "ISteamUserStats",
     "achievements" = "GetPlayerAchievements",
+    "gameStats" = "GetUserStatsForGame",
 }
 
 enum IPlayerService {
@@ -75,7 +76,7 @@ export class SteamAPI {
         return `${this.SteamHost}/${endPoint["point"]}/${func}/${version}/?format=${this.Format}&key=${this.apiKey}&${argsQuery}`
     }
 
-    public async GetFriendList(steamid: string, relationship: Relationships = Relationships["friend"]) {
+    public async GetFriendList(steamid: string, relationship: Relationships = Relationships["friend"]): Promise<Responses.FriendsResponse> {
         const args = {
             "steamid": steamid,
             "relationship": relationship
@@ -88,23 +89,23 @@ export class SteamAPI {
                 friend.name = name;
             });
         }
-        return JSON.stringify(list, null, 2);
+        return list;
     }
 
-    public async GetProfileInfo(steamid: string) {
+    public async GetProfileInfo(steamid: string): Promise<Responses.ProfileResponse> {
         const args = {
             "steamids": steamid
         }
         return await this.doRequest<Responses.ProfileResponse>(SteamEndPoints["user"], SteamEndPoints["user"]["profile"], Version[2], args);
     }
 
-    public async GetPlayerAchievements(steamid: string, appid: string, l?: string) {
+    public async GetPlayerAchievements(steamid: string, appid: string, l?: string): Promise<Responses.AchievementResponse> {
         const args = {
             steamid,
             appid,
             l
         }
-        return await this.doRequest(SteamEndPoints["stats"], SteamEndPoints["stats"]["achievements"], Version[1], args);
+        return await this.doRequest<Responses.AchievementResponse>(SteamEndPoints["stats"], SteamEndPoints["stats"]["achievements"], Version[1], args);
     }
     
     public async GetOwnedGames(steamid: string): Promise<Responses.GamesResponse> {
@@ -112,6 +113,15 @@ export class SteamAPI {
             steamid
         }
         return await this.doRequest<Responses.GamesResponse>(SteamEndPoints["service"], SteamEndPoints["service"]["games"], Version[1], args);
+    }
+
+    public async GetUserStatsForGame(steamid: string, appid: string, l?: string): Promise<Responses.UserStatsResponse> {
+        const args = {
+            steamid,
+            appid,
+            l
+        }
+        return await this.doRequest<Responses.UserStatsResponse>(SteamEndPoints["stats"], SteamEndPoints["stats"]["gameStats"], Version[2], args);
     }
 }
 
